@@ -10,7 +10,6 @@ const BidItemModel = new mongoose.Schema(
     },
     buyername: {
       type: String,
-      required: true,
     },
     itemquantity: {
       type: Number,
@@ -26,7 +25,6 @@ const BidItemModel = new mongoose.Schema(
     },
     buyerContact: {
       type: String,
-      required: true,
     },
     buyerprice: {
       type: Number,
@@ -45,7 +43,7 @@ const BidItemModel = new mongoose.Schema(
     },
     buyerResponded: {
       type: Boolean,
-      default: false
+      default: false,
     },
     acceptedtime: {
       type: String,

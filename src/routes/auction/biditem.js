@@ -9,25 +9,7 @@ const AllProduce = require("../../models/AllProduce");
 const Payments = require("../../models/Payments");
 const Graph = require("../../models/Graph");
 
-// Create bidItems*********************************************************************
-router.post("/", async (req, res) => {
-  try {
-    const newBidItem = await BidService.bidOnAnAuction(req.body);
-    if (newBidItem === 0) {
-      return res.status(200).json({
-        message: "This auction was closed and does not accept bids any more!",
-        bid: newBidItem,
-      });
-    }
-    return res.status(200).json({
-      message: "Bid successfully submitted!",
-      bid: newBidItem,
-    });
-  } catch (err) {
-    console.log(err, "Error occured creating bid");
-    return res.status(500).json(err);
-  }
-});
+
 
 // Update bid item ************************************************************
 router.put("/:id", async (req, res) => {
@@ -173,30 +155,6 @@ router.post("/newbid", async (req, res) => {
 
         //   CREATE A UNIFORM BID HERE(CAPTURES NUMBER OF BIDS PER ITEM)
         //   REGISTER FARMER IN DISTRICT HERE *******
-        try {
-          const existingBid = await UniformBid.findOneAndUpdate(
-            { farmerId: req.body.farmerId, itemname: req.body.itemname },
-            { $inc: { numberOfBids: 1 } },
-            { new: true }
-          );
-          if (existingBid) {
-            existingBid.numberOfBids += 1;
-            console.log("field updated");
-          } else {
-            const { farmerId, itemname, itemprice, itemimage } = req.body;
-            const newUniformBid = new UniformBid({
-              farmerId,
-              itemname,
-              itemprice,
-              itemimage,
-            });
-            const savedUniformBid = await newUniformBid.save();
-            console.log(savedUniformBid);
-          }
-        } catch (err) {
-          console.log(err);
-          res.status(500).json(err);
-        }
 
         return res.status(201).json(savedBid);
       }
